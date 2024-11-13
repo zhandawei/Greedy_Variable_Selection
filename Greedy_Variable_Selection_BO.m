@@ -31,7 +31,6 @@ while evaluation < max_evaluation
         ECI = zeros(1,length(remain_dim));   
         % calcaute ECI values of remaining varibles
         % you can use parfor to accelerate the calculation
-        search_grid = 400;
         for ii = 1:length(remain_dim)
            [optimal_x(ii),ECI(ii)]= Optimizer_GA(@(x)-Infill_ECI(x,GP_model,fmin,infill_x,remain_dim(ii)),1,lower_bound(remain_dim(ii)),upper_bound(remain_dim(ii)),10,20);
         end
