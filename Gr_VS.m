@@ -30,10 +30,12 @@ while evaluation < max_evaluation
         optimal_x = zeros(1,length(remain_dim));
         ECI = zeros(1,length(remain_dim));   
         % calcaute ECI values of remaining varibles
-       for ii = 1:length(remain_dim)
-            [optimal_x(ii),ECI(ii)]= Optimizer_GA(@(x)-Infill_ECI(x,GP_model,fmin,infill_x,remain_dim(ii)),1,lower_bound(remain_dim(ii)),upper_bound(remain_dim(ii)),10,20);
-       end
-       % find the max ECI value and its corresponding index value
+        % you can use parfor to accelerate the calculation
+        search_grid = 400;
+        for ii = 1:length(remain_dim)
+           [optimal_x(ii),ECI(ii)]= Optimizer_GA(@(x)-Infill_ECI(x,GP_model,fmin,infill_x,remain_dim(ii)),1,lower_bound(remain_dim(ii)),upper_bound(remain_dim(ii)),10,20);
+        end
+       % find the maximal ECI value and its corresponding index value
         [max_ECI,index] = max(-ECI);
         % replace the variable corresponding to the index value 
         infill_x(remain_dim(index)) = optimal_x(index);
